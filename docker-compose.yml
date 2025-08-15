@@ -1,0 +1,18 @@
+version: "2.3"
+
+services:
+  lemone-blog:
+    image: mysql:lts
+    container_name: lemone-blog-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: lemoneBlogDB
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - lemone_data:/var/lib/mysql
+
+volumes:
+  lemone_data:
