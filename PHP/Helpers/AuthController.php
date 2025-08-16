@@ -57,13 +57,13 @@ class AuthController
         }
 
         try {
-            $this->db->connect();
-
-            if (!$this->db->database) {
+            if (!$this->checkEmail($email)) {
                 return;
             }
 
-            if (!$this->checkEmail($email)) {
+            $this->db->connect();
+
+            if (!$this->db->database) {
                 return;
             }
 
@@ -73,12 +73,13 @@ class AuthController
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $hashedPassword);
 
-            $stmt->execute();
-
+            $result = $stmt->execute();
+            var_dump($result);
             $this->db->disconnect();
 
             $this->login($email, $password);
         }catch (PDOException $e){
+            var_dump($e);
             die($e->getMessage());
         }
     }
@@ -98,11 +99,11 @@ class AuthController
 
             if ($stmt->rowCount() > 0) {
                 $this->db->disconnect();
-                return true;
+                return false;
             }
 
             $this->db->disconnect();
-            return false;
+            return true;
         }catch (\Exception $exception) {
             return false;
         }
