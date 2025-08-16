@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace PHP\Helpers;
 
+use PDO;
 use PDOException;
+use PHP\Modals\User;
 
 class AuthController
 {
@@ -16,7 +18,31 @@ class AuthController
 
     public function login(string $email, string $password)
     {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
 
+        try {
+            $this->db->connect();
+
+            if (!$this->db->database) {
+                return false;
+            }
+
+            $stmt = $this->db->database->prepare("SELECT * FROM users WHERE email = :email LIMIT 1");
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+            $preUser = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!password_verify($password, $preUser["password"])){
+                return false;
+            }
+
+            $this->db->connect();
+            return $this->setSessionToken(new User($preUser["id"], $preUser["email"], $preUser["password"]));
+        }catch (\Exception $exception){
+            return false;
+        }
     }
 
     public function logout()
@@ -51,7 +77,7 @@ class AuthController
 
             $this->db->disconnect();
 
-//            TODO: Login user after sucses
+            $this->login($email, $password);
         }catch (PDOException $e){
             die($e->getMessage());
         }
@@ -79,6 +105,34 @@ class AuthController
             return false;
         }catch (\Exception $exception) {
             return false;
+        }
+    }
+
+    public function startSession(): void
+    {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+    }
+
+    private function setSessionToken(User $user): string
+    {
+        try {
+            $token = bin2hex(random_bytes(32));
+
+            $this->db->connect();
+            $stmt = $this->db->database->prepare("UPDATE users SET session_token = :token WHERE id = :id");
+            $stmt->bindParam(':token', $token);
+            $stmt->bindParam(':id', $user["id"]);
+            $stmt->execute();
+            $this->db->disconnect();
+
+            $this->startSession();
+            $_SESSION['token'] = $token;
+
+            return $token;
+        }catch (PDOException $e){
+            return $e->getMessage();
         }
     }
 }

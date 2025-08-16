@@ -5,8 +5,8 @@ namespace PHP\Modals;
 
 class User
 {
-    private $id;
-    private $email;
+    public $id;
+    public $email;
     private $password;
     private $session_token;
     private $token_expiration;
