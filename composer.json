@@ -1,0 +1,14 @@
+{
+    "name": "1999j/lemone-blog",
+    "autoload": {
+        "psr-4": {
+            "PHP\\": "PHP/"
+        }
+    },
+    "authors": [
+        {
+            "name": "jeffrey"
+        }
+    ],
+    "require": {}
+}
