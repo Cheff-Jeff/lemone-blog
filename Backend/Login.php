@@ -12,7 +12,12 @@ if (empty($_POST['email']) || empty($_POST['password'])) {
 $authController = new AuthController();
 
 try {
-    $authController->login($_POST['email'], $_POST['password']);
+    $result = $authController->login($_POST['email'], $_POST['password']);
+    if ($result === false) {
+        throw new Exception();
+    }
+
+    header('Location: ../index.php');
 }catch (\Exception $exception){
-    // Send Back
+    header('Location: ../login.php?error=1');
 }

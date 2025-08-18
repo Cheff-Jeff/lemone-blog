@@ -1,3 +1,11 @@
+<?php
+require_once __DIR__ . "/../vendor/autoload.php";
+
+\PHP\Helpers\SessionController::startSession();
+
+$userActive = isset($_SESSION['token']);
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -15,12 +23,22 @@
                 <li>
                     <a href="../index.php">Home</a>
                 </li>
+                <?PHP if (!$userActive) :?>
                 <li>
                     <a href="../login.php">Login</a>
                 </li>
                 <li>
                     <a href="../register.php">Register</a>
                 </li>
+                <?php else : ?>
+                <li>
+                    <a href="../Backend/Logout.php">Logout</a>
+                </li>
+                <?php endif; ?>
             </ul>
         </nav>
     </header>
+
+    <?php if(isset($_GET['error'])): ?>
+        <div> probleem </div>
+    <?php endif; ?>

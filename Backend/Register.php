@@ -13,7 +13,13 @@ echo "Hierwel";
 $authController = new AuthController();
 
 try {
-    $authController->register($_POST['email'], $_POST['password']);
+    $result = $authController->register($_POST['email'], $_POST['password']);
+
+    if ($result === false) {
+        throw new Exception();
+    }
+
+    header('Location: ../index.php');
 }catch (\Exception $exception){
-//    send back
+    header('Location: ../register.php?error=1');
 }

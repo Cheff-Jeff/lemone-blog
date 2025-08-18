@@ -16,7 +16,7 @@ class AuthController
         $this->db = new DatabaseConnectoion();
     }
 
-    public function login(string $email, string $password)
+    public function login(string $email, string $password): false|string
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return false;
@@ -45,26 +45,47 @@ class AuthController
         }
     }
 
-    public function logout()
+    public function logout(): bool
     {
+        SessionController::startSession();
 
+        if (!isset($_SESSION['token'])) {
+            return false;
+        }
+
+        try {
+            $token = $_SESSION['token'];
+
+            $this->db->connect();
+            $stmt = $this->db->database->prepare("UPDATE users SET session_token = NULL WHERE session_token = :token");
+            $stmt->bindParam(':token', $token);
+            $stmt->execute();
+
+            $this->db->connect();
+
+            $_SESSION = array();
+
+            return true;
+        }catch (\Exception $exception){
+            return false;
+        }
     }
 
-    public function register(string $email, string $password): void
+    public function register(string $email, string $password): bool
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return;
+            return false;
         }
 
         try {
             if (!$this->checkEmail($email)) {
-                return;
+                return false;
             }
 
             $this->db->connect();
 
             if (!$this->db->database) {
-                return;
+                return false;
             }
 
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -73,14 +94,13 @@ class AuthController
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $hashedPassword);
 
-            $result = $stmt->execute();
-            var_dump($result);
+            $stmt->execute();
             $this->db->disconnect();
 
             $this->login($email, $password);
+            return true;
         }catch (PDOException $e){
-            var_dump($e);
-            die($e->getMessage());
+            return false;
         }
     }
 
@@ -109,13 +129,6 @@ class AuthController
         }
     }
 
-    public function startSession(): void
-    {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-    }
-
     private function setSessionToken(User $user): string
     {
         try {
@@ -124,11 +137,11 @@ class AuthController
             $this->db->connect();
             $stmt = $this->db->database->prepare("UPDATE users SET session_token = :token WHERE id = :id");
             $stmt->bindParam(':token', $token);
-            $stmt->bindParam(':id', $user["id"]);
+            $stmt->bindParam(':id', $user->id);
             $stmt->execute();
             $this->db->disconnect();
 
-            $this->startSession();
+            SessionController::startSession();
             $_SESSION['token'] = $token;
 
             return $token;
