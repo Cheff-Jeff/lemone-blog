@@ -23,7 +23,7 @@ $post = $postData['post'];
 ?>
 
 <?php require_once __DIR__ . "/Templates/Header.php" ?>
-    <artice>
+    <article>
         <h1><?= $post->title ?></h1>
 
         <p><?= $post->content ?></p>
@@ -31,5 +31,5 @@ $post = $postData['post'];
         <footer>
             posted on <?= $post->created_at ?> by <?= $user->email ?>
         </footer>
-    </artice>
+    </article>
 <?php require_once __DIR__ . "/Templates/Footer.php" ?>

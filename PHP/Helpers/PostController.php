@@ -138,7 +138,7 @@ class PostController
         }
     }
 
-    public function getAllPost(): false|array
+    public function getAllPosts(): false|array
     {
         try {
             $this->db->connect();
@@ -147,11 +147,26 @@ class PostController
                 return false;
             }
 
-            $stmt = $this->db->database->prepare("SELECT * FROM posts INNER JOIN users ON posts.user_id = users.id");
+            $stmt = $this->db->database->prepare("
+                SELECT
+                    posts.*,
+                    users.id as user_id,
+                    users.email
+                FROM posts as posts
+                INNER JOIN users as users ON posts.user_id = users.id
+                ORDER BY posts.created_at DESC
+            ");
+
             $stmt->execute();
-            $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            var_dump($posts);
-            return $posts;
+            $prePosts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $postData = [];
+            foreach ($prePosts as $prePost) {
+                $postData[] = [
+                    "post" => new Post($prePost['id'], $prePost['user_id'], $prePost['title'], $prePost['content'], $prePost['created_at']),
+                    "user" => new User($prePost['user_id'], $prePost['email'], null),
+                ];
+            }
+            return $postData;
         }catch (PDOException $e) {
             return false;
         }
