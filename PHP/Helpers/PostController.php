@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace PHP\Helpers;
 
-use DateTime;
 use PDO;
 use PDOException;
 use PHP\Modals\Post;
@@ -28,7 +27,7 @@ class PostController
             if (!$this->user) {
                 return false;
             }
-            $now = date('d-m-y');
+            $now = date('Y-m-d');
 
             $this->db->connect();
 

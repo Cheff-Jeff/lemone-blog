@@ -26,7 +26,7 @@ $posts = $postController->getAllPosts();
                             <p><?=$blogPost->content?></p>
 
                             <footer>
-                                created at <?= $blogPost->created_at ?> by <?= $author->email ?>
+                                created at <?= date('d-m-y', strtotime($blogPost->created_at)) ?> by <?= $author->email ?>
                             </footer>
                         </article>
                     </a>

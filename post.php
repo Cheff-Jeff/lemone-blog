@@ -29,7 +29,7 @@ $post = $postData['post'];
         <p><?= $post->content ?></p>
 
         <footer>
-            posted on <?= $post->created_at ?> by <?= $user->email ?>
+            posted on <?= date('d-m-y', strtotime($post->created_at)) ?> by <?= $user->email ?>
         </footer>
     </article>
 <?php require_once __DIR__ . "/Templates/Footer.php" ?>
