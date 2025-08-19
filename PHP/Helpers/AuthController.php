@@ -9,7 +9,7 @@ use PHP\Modals\User;
 
 class AuthController
 {
-    private $db;
+    private DatabaseConnectoion $db;
 
     public function __construct()
     {
