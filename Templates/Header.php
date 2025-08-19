@@ -13,7 +13,7 @@ $userActive = isset($_SESSION['token']);
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Registreren</title>
+    <title>Lemone - Blog</title>
 </head>
 <body>
 <main>
@@ -24,16 +24,19 @@ $userActive = isset($_SESSION['token']);
                     <a href="../index.php">Home</a>
                 </li>
                 <?PHP if (!$userActive) :?>
-                <li>
-                    <a href="../login.php">Login</a>
-                </li>
-                <li>
-                    <a href="../register.php">Register</a>
-                </li>
+                    <li>
+                        <a href="../login.php">Login</a>
+                    </li>
+                    <li>
+                        <a href="../register.php">Register</a>
+                    </li>
                 <?php else : ?>
-                <li>
-                    <a href="../Backend/Logout.php">Logout</a>
-                </li>
+                    <li>
+                        <a href="../new-post.php">nieuwe post</a>
+                    </li>
+                    <li>
+                        <a href="../Backend/Logout.php">Logout</a>
+                    </li>
                 <?php endif; ?>
             </ul>
         </nav>

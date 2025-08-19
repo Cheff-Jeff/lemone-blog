@@ -28,11 +28,7 @@ class PostController
             if (!$this->user) {
                 return false;
             }
-
-            $dateTime = new DateTime();
-            $dateTime->format('d-m-Y');
-
-            $now = $dateTime->getTimestamp();
+            $now = date('d-m-y');
 
             $this->db->connect();
 
@@ -53,7 +49,7 @@ class PostController
                 return false;
             }
 
-            return new Post((int)$id, $this->user->id, $title, $content, (string)$now);
+            return new Post(intval($id), intval($this->user->id), $title, $content, $now);
         }catch (PDOException $e){
             return false;
         }
@@ -120,14 +116,18 @@ class PostController
                 return false;
             }
 
-            $stmt = $this->db->database->prepare(
-                "SELECT * FROM posts WHERE id = :id INNER JOIN users ON posts.user_id = users.id"
-            );
+            $stmt = $this->db->database->prepare("
+                SELECT 
+                    posts.*, 
+                    users.id, 
+                    users.email 
+                FROM posts as posts 
+                INNER JOIN users as users ON posts.user_id = users.id 
+                WHERE posts.id = :id
+            ");
             $stmt->bindParam(':id', $id);
             $stmt->execute();
             $prePost = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            var_dump($prePost);
 
             return [
                 "user" => new User($prePost['user_id'], $prePost['email'], null),

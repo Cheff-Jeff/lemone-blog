@@ -6,7 +6,7 @@ use PHP\Helpers\AuthController;
 
 
 if (empty($_POST['email']) || empty($_POST['password'])) {
-    return;
+    header('Location: ../login.php?error=1');
 }
 
 $authController = new AuthController();

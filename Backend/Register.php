@@ -6,10 +6,9 @@ use PHP\Helpers\AuthController;
 
 
 if (empty($_POST['email']) || empty($_POST['password'])) {
-    echo "Hier Niet komen";
-    return;
+    header('Location: ../login.php?error=1');
 }
-echo "Hierwel";
+
 $authController = new AuthController();
 
 try {
