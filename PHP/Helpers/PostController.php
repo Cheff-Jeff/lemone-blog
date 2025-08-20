@@ -78,8 +78,6 @@ class PostController
 
             return true;
         } catch (PDOException $e) {
-            var_dump($e->getMessage());
-            die();
             return false;
         }
     }

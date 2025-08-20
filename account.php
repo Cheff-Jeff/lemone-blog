@@ -30,7 +30,7 @@ $userPosts = $userController->getUserPosts();
             <div class="buttons">
                 <a href="./edit-post.php?postID=<?=$post->id?>">bewerken</a>
 
-                <a href="#">verwijderen</a>
+                <a href="./Backend/DeletePost.php?id=<?=$post->id?>">verwijderen</a>
             </div>
         </div>
 
