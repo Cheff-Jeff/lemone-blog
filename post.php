@@ -2,6 +2,7 @@
 require_once __DIR__ . "/vendor/autoload.php";
 
 use PHP\Helpers\PostController;
+use PHP\Helpers\SanitizeHTML;
 use PHP\Modals\Post;
 use PHP\Modals\User;
 
@@ -24,12 +25,12 @@ $post = $postData['post'];
 
 <?php require_once __DIR__ . "/Templates/Header.php" ?>
     <article>
-        <h1><?= $post->title ?></h1>
+        <h1><?=SanitizeHTML::outputCleanHTML($post->title)?></h1>
 
-        <p><?= $post->content ?></p>
+        <p><?=SanitizeHTML::outputCleanHTML($post->content)?></p>
 
         <footer>
-            posted on <?= date('d-m-y', strtotime($post->created_at)) ?> by <?= $user->email ?>
+            posted on <?= date('d-m-y', strtotime($post->created_at)) ?> by <?=SanitizeHTML::outputCleanHTML($user->email)?>
         </footer>
     </article>
 <?php require_once __DIR__ . "/Templates/Footer.php" ?>

@@ -2,6 +2,7 @@
 require_once __DIR__ . "/vendor/autoload.php";
 
 use PHP\Helpers\PostController;
+use PHP\Helpers\SanitizeHTML;
 use PHP\Modals\Post;
 use PHP\Modals\User;
 
@@ -22,11 +23,11 @@ $posts = $postController->getAllPosts();
 
                     <a href="./post.php?postID=<?=$blogPost->id?>">
                         <article>
-                            <h4><?=$blogPost->title?></h4>
-                            <p><?=$blogPost->content?></p>
+                            <h4><?=SanitizeHTML::outputCleanHTML($blogPost->title)?></h4>
+                            <p><?=SanitizeHTML::outputCleanHTML($blogPost->content)?></p>
 
                             <footer>
-                                created at <?= date('d-m-y', strtotime($blogPost->created_at)) ?> by <?= $author->email ?>
+                                created at <?= date('d-m-y', strtotime($blogPost->created_at)) ?> by <?=SanitizeHTML::outputCleanHTML($author->email)?>
                             </footer>
                         </article>
                     </a>

@@ -3,6 +3,7 @@ require_once __DIR__ . "/vendor/autoload.php";
 
 use PHP\Helpers\PostController;
 use PHP\Helpers\UserController;
+use PHP\Helpers\SanitizeHTML;
 use PHP\Modals\Post;
 
 \PHP\Helpers\SessionController::startSession();
@@ -29,9 +30,9 @@ if (!$post || !$user || $post->user_id !== $user->id) {
 
 <?php require_once __DIR__ . "/Templates/Header.php" ?>
     <form action="./Backend/EditPost.php" method="post">
-        <input type="hidden" name="id" value="<?=$post->id?>">
-        <input type="text" name="title" value="<?=$post->title?>" placeholder="post titel">
-        <textarea name="content" placeholder="post content"><?=$post->content?></textarea>
+        <input type="hidden" name="id" value="<?=SanitizeHTML::outputCleanHTML(strval($post->id))?>">
+        <input type="text" name="title" value="<?=SanitizeHTML::outputCleanHTML($post->title)?>" placeholder="post titel">
+        <textarea name="content" placeholder="post content"><?=SanitizeHTML::outputCleanHTML($post->content)?></textarea>
 
         <button type="submit">post opslaan</button>
     </form>
