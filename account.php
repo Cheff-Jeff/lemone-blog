@@ -2,18 +2,17 @@
 require_once __DIR__ . "/vendor/autoload.php";
 
 use PHP\Helpers\UserController;
+use PHP\Helpers\SessionController;
 use PHP\Helpers\SanitizeHTML;
 use PHP\Modals\Post;
 
-\PHP\Helpers\SessionController::startSession();
-
-$userActive = isset($_SESSION['token']);
+SessionController::startSession();
+$userActive = SessionController::isLoggedIn();
 
 if (!$userActive) {
     header("Location: ./login.php");
 }
 $userController = new UserController();
-
 $user = $userController->getUserByToken();
 
 /** @var Post[] $userPosts */

@@ -1,9 +1,11 @@
 <?php
 require_once __DIR__ . "/vendor/autoload.php";
 
-\PHP\Helpers\SessionController::startSession();
+use PHP\Helpers\SessionController;
 
-$userActive = isset($_SESSION['token']);
+SessionController::startSession();
+
+$userActive = SessionController::isLoggedIn();
 
 if (!$userActive) {
     header("Location: ./login.php");

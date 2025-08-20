@@ -3,12 +3,13 @@ require_once __DIR__ . "/vendor/autoload.php";
 
 use PHP\Helpers\PostController;
 use PHP\Helpers\UserController;
+use PHP\Helpers\SessionController;
 use PHP\Helpers\SanitizeHTML;
 use PHP\Modals\Post;
 
-\PHP\Helpers\SessionController::startSession();
+SessionController::startSession();
 
-if (!isset($_SESSION['token'])) {
+if (!SessionController::isLoggedIn()) {
     header("Location: ./login.php");
 }
 if (!isset($_GET['postID'])) {
@@ -23,7 +24,7 @@ $postData = $postController->getPost($_GET['postID']);
 $post = $postData['post'];
 $user = $userController->getUserByToken();
 
-if (!$post || !$user || $post->user_id !== $user->id) {
+if (!$post || !$user || !SessionController::postBelongsToUser($post->id)) {
     header('Location: /index.php');
 }
 ?>
