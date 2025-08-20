@@ -148,7 +148,10 @@ class PostController
 
             $stmt = $this->db->database->prepare("
                 SELECT
-                    posts.*,
+                    posts.id,
+                    posts.title,
+                    LEFT(posts.content, 200) AS shord,
+                    posts.created_at,
                     users.id as user_id,
                     users.email
                 FROM posts as posts
@@ -161,7 +164,7 @@ class PostController
             $postData = [];
             foreach ($prePosts as $prePost) {
                 $postData[] = [
-                    "post" => new Post($prePost['id'], $prePost['user_id'], $prePost['title'], $prePost['content'], $prePost['created_at']),
+                    "post" => new Post($prePost['id'], $prePost['user_id'], $prePost['title'], $prePost['shord'], $prePost['created_at']),
                     "user" => new User($prePost['user_id'], $prePost['email'], null),
                 ];
             }
