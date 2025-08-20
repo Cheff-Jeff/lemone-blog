@@ -34,7 +34,7 @@ class ReactionController
             $now = date('Y-m-d');
 
             $stmt = $this->db->database->prepare("
-                INSERT INTO reactions (post_id, user_id, title, content, date) 
+                INSERT INTO reactions (post_id, user_id, title, content, created_at) 
                 VALUES (:post_id, :user_id, :title, :content, :date)
             ");
             $stmt->bindParam(':post_id', $postId);
@@ -76,7 +76,7 @@ class ReactionController
         }
     }
 
-    public function deleteReaction(int $reactionId, int $postId)
+    public function deleteReaction(int $reactionId, int $postId): bool
     {
         try {
             if (!$this->user){
@@ -100,13 +100,9 @@ class ReactionController
         }
     }
 
-    public function getPostReactions($postId): false|array
+    public function getPostReactions(int $postId): false|array
     {
         try {
-            if (!$this->user){
-                return false;
-            }
-
             $this->db->connect();
             if (!$this->db->database) {
                 return false;
@@ -116,7 +112,7 @@ class ReactionController
                 SELECT reaction.*, users.id as user_id, users.email 
                 FROM reactions as reaction 
                 INNER JOIN users as users 
-                ON posts.user_id = users.id WHERE post_id = :post_id
+                ON reaction.user_id = users.id WHERE post_id = :post_id
             ");
             $stmt->bindParam(':post_id', $postId);
             $stmt->execute();
@@ -125,11 +121,38 @@ class ReactionController
             $reactions = [];
 
             foreach ($preReactions as $reaction){
-                $reactions[] = new Reaction($reaction['id'], $reaction['user_id'], $postId, $reaction['title'],$reaction['content'],$reaction['date']);
+                $reactions[] = new Reaction(
+                    $reaction['id'],
+                    $reaction['user_id'],
+                    intval($postId),
+                    $reaction['title'],
+                    $reaction['content'],
+                    $reaction['created_at'],
+                    new User($reaction['user_id'], $reaction['email'], null)
+                );
             }
 
             return $reactions;
         }catch (\PDOException $e){
+            return false;
+        }
+    }
+
+    public function getReaction(int $id): false|Reaction
+    {
+        try {
+            $this->db->connect();
+            if (!$this->db->database) {
+                return false;
+            }
+
+            $stmt = $this->db->database->prepare("SELECT * FROM reactions WHERE id = :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            $reaction = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+            return new Reaction($reaction['id'], $reaction['user_id'], $reaction['post_id'], $reaction['title'], $reaction['content'], $reaction['created_at']);
+        } catch (\PDOException $e){
             return false;
         }
     }

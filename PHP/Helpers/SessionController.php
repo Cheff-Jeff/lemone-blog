@@ -51,4 +51,25 @@ class SessionController
 
         return $postBelongsToUser;
     }
+
+    public static function reacrionBelongsToUser(int $reactionId): bool
+    {
+        if (!is_numeric($reactionId)) return false;
+        $reactionBelongsToUser = false;
+
+        $userController = new UserController();
+        $reactionController = new ReactionController();
+
+        self::startSession();
+        $user = $userController->getUserByToken();
+        $reaction = $reactionController->getReaction($reactionId);
+
+        if (!$user || !$reaction) return false;
+
+        if ($reaction->user_id === $user->id) {
+            $reactionBelongsToUser = true;
+        }
+
+        return $reactionBelongsToUser;
+    }
 }

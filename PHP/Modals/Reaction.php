@@ -10,8 +10,9 @@ class Reaction
     public string $title;
     public string $content;
     public string $created_at;
+    public User|null $user;
 
-    public function __construct(int $id, int $user_id, int $post_id, string $title, string $content, string $created_at)
+    public function __construct(int $id, int $user_id, int $post_id, string $title, string $content, string $created_at, User|null $user = null)
     {
         $this->id = $id;
         $this->user_id = $user_id;
@@ -19,5 +20,6 @@ class Reaction
         $this->title = $title;
         $this->content = $content;
         $this->created_at = $created_at;
+        $this->user = $user;
     }
 }
