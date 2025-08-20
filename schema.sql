@@ -7,9 +7,20 @@ CREATE TABLE users (
 
 CREATE TABLE posts (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255),
+    title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
     created_at DATE NOT NULL,
     user_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
-)
+);
+
+CREATE TABLE reactions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    content VARCHAR(255) NOT NULL,
+    created_at DATE NOT NULL,
+    user_id INT NOT NULL,
+    post_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (post_id) REFERENCES posts(id)
+);
