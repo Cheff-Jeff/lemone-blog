@@ -13,10 +13,7 @@ try {
     $postController = new PostController();
     $newPost = $postController->createPost($_POST['title'], $_POST['content']);
 
-    var_dump($newPost);
-
     if ($newPost === false){
-        var_dump("Dit is false");
         throw new Exception();
     }
 

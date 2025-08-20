@@ -78,6 +78,8 @@ class PostController
 
             return true;
         } catch (PDOException $e) {
+            var_dump($e->getMessage());
+            die();
             return false;
         }
     }
@@ -118,7 +120,7 @@ class PostController
             $stmt = $this->db->database->prepare("
                 SELECT 
                     posts.*, 
-                    users.id, 
+                    users.id as user_id, 
                     users.email 
                 FROM posts as posts 
                 INNER JOIN users as users ON posts.user_id = users.id 

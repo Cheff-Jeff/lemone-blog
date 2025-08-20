@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace PHP\Helpers;
 
 use PDO;
+use PHP\Modals\Post;
 use PHP\Modals\User;
 
 class UserController
@@ -42,6 +43,37 @@ class UserController
             }
 
             return new User($user['id'], $user['email'], null);
+        }catch (\PDOException $e){
+            return false;
+        }
+    }
+
+    public function getUserPosts()
+    {
+        try {
+            $user = $this->getUserByToken();
+
+            if (!$user) {
+                return false;
+            }
+
+            $this->db->connect();
+
+            if (!$this->db->database) {
+                return false;
+            }
+
+            $stmt = $this->db->database->prepare("SELECT * FROM posts WHERE user_id = :id ORDER BY created_at DESC");
+            $stmt->bindParam(':id', $user->id);
+            $stmt->execute();
+            $prePosts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $posts = [];
+
+            foreach ($prePosts as $prePost) {
+                $posts[] = new Post($prePost['id'], $prePost['user_id'], $prePost['title'], $prePost['content'], $prePost['created_at']);
+            }
+
+            return $posts;
         }catch (\PDOException $e){
             return false;
         }

@@ -35,6 +35,9 @@ $userActive = isset($_SESSION['token']);
                         <a href="../new-post.php">nieuwe post</a>
                     </li>
                     <li>
+                        <a href="../account.php">account</a>
+                    </li>
+                    <li>
                         <a href="../Backend/Logout.php">Logout</a>
                     </li>
                 <?php endif; ?>
