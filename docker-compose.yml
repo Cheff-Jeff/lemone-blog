@@ -1,6 +1,14 @@
-version: "2.3"
-
 services:
+  php-app:
+    build: .
+    container_name: lemone-blog-php
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - lemone-blog
+
   lemone-blog:
     image: mysql:lts
     container_name: lemone-blog-db
