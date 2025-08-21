@@ -90,13 +90,13 @@ $post3['id'] = $pdo->lastInsertId();
 
 $response1 = [
     'title' => "Guinness Serie ?",
-    'content' => "Wouw ik kan niet wachten, Ik houd van Guinness!",
+    'content' => "Wauw ik kan niet wachten, Ik houd van Guinness!",
     'user_id' => $user1['id'],
     'post_id' => $post2['id']
 ];
 $response2 = [
     'title' => "Zijn de stunts echt?",
-    'content' => "Ik dacht dat acteurs verplicht een stunt man moesten gebruiken.",
+    'content' => "Ik dacht dat acteurs verplicht een stuntman moesten gebruiken.",
     'user_id' => $user3['id'],
     'post_id' => $post1['id']
 ];

@@ -21,7 +21,7 @@ $userPosts = $userController->getUserPosts();
 
 <?php require_once __DIR__ . "/Templates/Header.php" ?>
 <div class="container">
-    <h1>Hello <?=SanitizeHTML::outputCleanHTML($user->email)?></h1>
+    <h1>Hallo <?=SanitizeHTML::outputCleanHTML($user->email)?></h1>
 
     <?php foreach ($userPosts as $post) : ?>
         <div class="post">

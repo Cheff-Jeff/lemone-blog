@@ -27,7 +27,7 @@ $posts = $postController->getAllPosts();
                             <p><?=SanitizeHTML::outputCleanHTML($blogPost->content)?></p>
 
                             <footer>
-                                created at <?= date('d-m-y', strtotime($blogPost->created_at)) ?> by <?=SanitizeHTML::outputCleanHTML($author->email)?>
+                                Geplaats op <?= date('d-m-y', strtotime($blogPost->created_at)) ?> door <?=SanitizeHTML::outputCleanHTML($author->email)?>
                             </footer>
                         </article>
                     </a>

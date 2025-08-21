@@ -40,7 +40,7 @@ $userHasResponed = false;
         <p><?=SanitizeHTML::outputCleanHTML($post->content)?></p>
 
         <footer>
-            posted on <?= date('d-m-y', strtotime($post->created_at)) ?> by <?=SanitizeHTML::outputCleanHTML($user->email)?>
+            Geplaats op <?= date('d-m-y', strtotime($post->created_at)) ?> door <?=SanitizeHTML::outputCleanHTML($user->email)?>
         </footer>
     </article>
 
