@@ -23,3 +23,23 @@ h6 {
   color: var(--primary-color);
   font-weight: 600;
 }
+
+.main-page {
+  margin-top: 75px;
+}
+
+.container {
+  width: clamp(500px, 70%, 1200px);
+  margin: 0 auto;
+}
+
+.heading-big {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  margin-top: 15px;
+}
+
+.small-text {
+  font-size: 0.7rem;
+  font-style: italic;
+}

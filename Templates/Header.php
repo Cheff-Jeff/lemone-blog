@@ -19,6 +19,9 @@ $userActive = isset($_SESSION['token']);
     <link rel="stylesheet" href="../src/styles/variables.css">
     <link rel="stylesheet" href="../src/styles/header.css">
     <link rel="stylesheet" href="../src/styles/main.css">
+    <?php if (isset($css)) : ?>
+        <link rel="stylesheet" href="../src/styles/<?=$css?>.css">
+    <?php endif; ?>    
     <title>Lemone - Blog</title>
 </head>
 <body>
