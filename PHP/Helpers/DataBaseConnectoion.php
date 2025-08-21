@@ -14,7 +14,7 @@ class DataBaseConnectoion
     {
         try {
             $conn = new PDO(
-                'mysql:host=lemone-blog-db;port=3306;dbname=lemoneBlogDB;charset=utf8',
+                'mysql:host=localhost;port=3306;dbname=lemoneBlogDB;charset=utf8',
                 'root',
                 'root_password'
             );

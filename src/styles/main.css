@@ -1,0 +1,25 @@
+body * {
+  display: block;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  color: var(--primary-color);
+  background: var(--background-color);
+  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  margin: 0 auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--primary-color);
+  font-weight: 600;
+}
