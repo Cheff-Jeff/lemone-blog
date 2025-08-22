@@ -1,4 +1,4 @@
-<?php $css = "login"; ?>
+<?php $css = "login"; $js = "login"; ?>
 <?php require_once __DIR__ . "/Templates/Header.php" ?>
 <section class="main-page">
     <div class="container">
@@ -12,6 +12,7 @@
                 class="input-field"
                 required
             >
+            <span class="inputError email small-text"></span>
 
             <input 
                 type="password"
@@ -20,6 +21,7 @@
                 class="input-field"
                 required
             >
+            <span class="inputError password small-text"></span>
 
             <button type="submit" class="btn-primary">Registreren</button>
         </form>
