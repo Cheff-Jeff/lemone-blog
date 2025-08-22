@@ -55,10 +55,14 @@ foreach ($reactions as $reaction) {
                     <h1 class="title">
                         <?=SanitizeHTML::outputCleanHTML($post->title)?>
                     </h1>
-                    
-                    <p>
-                        <?=SanitizeHTML::outputCleanHTML($post->content)?>
-                    </p>
+
+                    <div class="content">
+                        <?= html_entity_decode(
+                            $post->content,
+                            ENT_QUOTES | ENT_HTML5,
+                            'UTF-8'); 
+                        ?>
+                    </div>
                 </div>
             </article>
 

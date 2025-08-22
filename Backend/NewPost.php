@@ -3,6 +3,7 @@ declare(strict_types=1);
 require_once __DIR__ . "/../vendor/autoload.php";
 
 use PHP\Helpers\PostController;
+use PHP\Helpers\SanitizeHTML;
 use PHP\Helpers\SessionController;
 
 if (empty($_POST['title']) || empty($_POST['content']))
@@ -16,8 +17,12 @@ try {
     if (!is_string($_POST['content'])) throw new Exception("Content is geen text");
 
     $title = strip_tags($_POST['title']);
-    $content = $_POST['content'];
-
+    $content = htmlentities(
+        SanitizeHTML::cleanWYSIWYGInput($_POST['content']),
+        ENT_QUOTES | ENT_HTML5,
+        'UTF-8'
+    );
+    
     $postController = new PostController();
     $newPost = $postController->createPost($title, $content);
 
