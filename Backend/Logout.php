@@ -16,7 +16,7 @@ try {
         throw new Exception("uitloggen mislukt.");
     }
 
-    header('Location: ../index.php');
+    header('Location: ../index.php'.'?success='.urlencode("Uitloggen gelukt."));
 }catch (\Exception $exception){
-    header('Location: ../index.php?error=1');
+    header('Location: ../index.php?error='.urlencode($exception->getMessage()));
 }

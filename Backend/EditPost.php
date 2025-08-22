@@ -7,7 +7,7 @@ use PHP\Helpers\SessionController;
 
 if (empty($_POST['title']) || empty($_POST['content']) || empty($_POST['id']))
 {
-    header('Location: ../edit-post.php?error=1&postID='.$_GET['postID']);
+    header('Location: ../edit-post.php?error='. urlencode("Er is iets misgegaan.") .'&postID='.$_GET['postID']);
 }
 
 try {
@@ -29,7 +29,7 @@ try {
         throw new Exception("de post is niet geupdate");
     }
 
-    header('Location: ../post.php?postID='.$id);
-} catch (\Throwable $th) {
-    header('Location: ../edit-post.php?error=1&postID='.$_GET['postID']);
+    header('Location: ../post.php?postID='.$id.'&success='.urlencode("Post is geupdate."));
+} catch (\Exception $exception) {
+    header('Location: ../edit-post.php?error='.urlencode($exception->getMessage()).'&postID='.$_GET['postID']);
 }

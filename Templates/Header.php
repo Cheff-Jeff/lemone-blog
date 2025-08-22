@@ -55,5 +55,9 @@ $userActive = isset($_SESSION['token']);
     </header>
 
     <?php if(isset($_GET['error'])): ?>
-        <div> probleem </div>
+        <div class="error-note"> <?= urldecode($_GET['error']) ?> </div>
+    <?php endif; ?>
+    
+    <?php if(isset($_GET['success'])): ?>
+        <div class="good-note"> <?= urldecode($_GET['success']) ?> </div>
     <?php endif; ?>

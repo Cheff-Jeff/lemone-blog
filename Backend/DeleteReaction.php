@@ -7,7 +7,7 @@ use PHP\Helpers\SessionController;
 
 if (empty($_GET['postId']) || empty($_GET['id']))
 {
-    header('Location: ../post.php?postID='.$_GET['postId'].'error=1');
+    header('Location: ../post.php?postID='.$_GET['postId'].'error='. urlencode("Er is iets misgegaan."));
 }
 
 try {
@@ -23,10 +23,10 @@ try {
     $reactionDeleted = $reactionController->deleteReaction($id, $postId);
 
     if ($reactionDeleted === false){
-        header('Location: ../post.php?postID='.$_GET['postId'].'error=1');
+        throw new Exception("Reactie is niet verwijderd");
     }
 
-    header('Location: ../post.php?postID='.$_GET['postId']);
-} catch (\Exception $e){
-    header('Location: ../post.php?postID='.$_GET['postId'].'error=1');
+    header('Location: ../post.php?postID='.$_GET['postId'].'&success=' . urlencode("Reactie is verwijderd."));
+} catch (\Exception $exception){
+    header('Location: ../post.php?postID='.$_GET['postId'].'error='. urlencode($exception->getMessage()));
 }

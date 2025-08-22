@@ -58,3 +58,47 @@ h6 {
     background: var(--secondary-color);
   }
 }
+
+.error-note {
+  position: absolute;
+  top: 30px;
+  right: 5px;
+  background: var(--error-transp);
+  border-left: solid 5px var(--error);
+  color: var(--error);
+  border-radius: 5px;
+  padding: 10px 20px;
+  width: 200px;
+  transition: all 0.5s ease-in-out;
+  overflow: hidden;
+
+  &.hide {
+    width: 0px;
+    padding: 0;
+    border: 0px;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+  }
+}
+
+.good-note {
+  position: absolute;
+  top: 30px;
+  right: 5px;
+  background: var(--correct-transp);
+  border-left: solid 5px var(--correct);
+  color: var(--correct);
+  border-radius: 5px;
+  padding: 10px 20px;
+  width: 200px;
+  transition: all 0.5s ease-in-out;
+  overflow: hidden;
+
+  &.hide {
+    width: 0px;
+    padding: 0;
+    border: 0px;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+  }
+}

@@ -5,4 +5,7 @@
   --light-background-color-transp: #c5c5c545;
   --background-color: #ffffff;
   --error: #ff4d4d;
+  --error-transp: #ff4d4d55;
+  --correct: #00704a;
+  --correct-transp: #00704a55;
 }

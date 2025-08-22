@@ -7,7 +7,7 @@ use PHP\Helpers\SessionController;
 
 if (empty($_POST['title']) || empty($_POST['content']) || empty($_POST['postId']))
 {
-    header('Location: ../post.php?postID='.$_POST['postId'].'error=1');
+    header('Location: ../post.php?postID='.$_POST['postId'].'error='.urlencode("Er is iets misgegaan."));
 }
 
 try {
@@ -24,10 +24,10 @@ try {
     $reactionCreated = $reactionController->createReaction($postId, $title, $content);
 
     if ($reactionCreated === false){
-        header('Location: ../post.php?postID='.$_POST['postId'].'error=1');
+        throw new Exception("Reactie aanmaken mislukt.");
     }
 
-    header('Location: ../post.php?postID='.$_POST['postId']);
-}catch (\Exception $e){
-    header('Location: ../post.php?postID='.$_POST['postId'].'error=1');
+    header('Location: ../post.php?postID='.$_POST['postId'].'&success='.urlencode("Reactie is aangemaakt."));
+}catch (\Exception $exception){
+    header('Location: ../post.php?postID='.$_POST['postId'].'error='.urlencode($exception->getMessage()));
 }
