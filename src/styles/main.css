@@ -43,3 +43,18 @@ h6 {
   font-size: 0.7rem;
   font-style: italic;
 }
+
+.btn-primary {
+  background: var(--primary-color);
+  color: var(--background-color);
+  border: none;
+  padding: 10px 15px;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background: var(--secondary-color);
+  }
+}

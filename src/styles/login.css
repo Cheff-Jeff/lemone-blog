@@ -1,0 +1,34 @@
+.main-page {
+  min-height: 90dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .container {
+    margin-top: -5%;
+  }
+
+  .title {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+
+  form {
+    width: 100%;
+    margin: 0 auto;
+
+    .input-field {
+      width: clamp(300px, 35%, 900px);
+      margin: 15px auto;
+      padding: 5px 10px;
+      font-size: 1.05rem;
+      border: solid 2px var(--primary-color);
+      border-radius: 15px;
+    }
+
+    .btn-primary {
+      margin: 20px auto 0;
+    }
+  }
+}
