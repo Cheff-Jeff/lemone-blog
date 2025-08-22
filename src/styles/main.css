@@ -102,3 +102,12 @@ h6 {
     transition: all 0.5s ease-in-out;
   }
 }
+
+.input-field {
+  width: clamp(300px, 35%, 900px);
+  margin: 15px auto 0;
+  padding: 5px 10px;
+  font-size: 1.05rem;
+  border: solid 2px var(--primary-color);
+  border-radius: 15px;
+}

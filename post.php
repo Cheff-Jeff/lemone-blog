@@ -32,6 +32,14 @@ $userController = new UserController();
 $currentUser = $userController->getUserByToken();
 $userHasResponed = false;
 $css = 'post';
+$js = 'post';
+
+foreach ($reactions as $reaction) {
+    if ($currentUser && $reaction->user->id === $currentUser->id) {
+        $userHasResponed = true;
+        break;
+    }
+}
 ?>
 
 <?php require_once __DIR__ . "/Templates/Header.php" ?>
@@ -39,54 +47,120 @@ $css = 'post';
         <div class="container">
             <article class="full-post">
                 <div class="author">
-                    Geplaats op <?= date('d-m-y', strtotime($post->created_at)) ?> door <?=SanitizeHTML::outputCleanHTML($user->email)?>
+                    Geplaats op <?= date('d-m-y', strtotime($post->created_at)) ?> 
+                    door <?=SanitizeHTML::outputCleanHTML($user->email)?>
                 </div>
 
                 <div class="content">
-                    <h1 class="title"><?=SanitizeHTML::outputCleanHTML($post->title)?></h1>
-                    <p><?=SanitizeHTML::outputCleanHTML($post->content)?></p>
+                    <h1 class="title">
+                        <?=SanitizeHTML::outputCleanHTML($post->title)?>
+                    </h1>
+                    
+                    <p>
+                        <?=SanitizeHTML::outputCleanHTML($post->content)?>
+                    </p>
                 </div>
             </article>
 
-            <?php if ($reactions): ?>
+            <div class="reactions-title">
                 <h2>Reacties: </h2>
-                
+
+                <?php if ($currentUser && !$userHasResponed): ?>
+                    <button id="modal-trigger" class="btn-primary">
+                        Plaats reactie
+                    </button>
+                <?php endif; ?>
+            </div>
+            <?php if ($reactions): ?>
                 <div class="reactions">
                     <?php foreach ($reactions as $reaction): ?>
-                        <?php if ($currentUser && $reaction->user->id === $currentUser->id) {$userHasResponed = true;} ?>
                         <div class="reaction">
-                            <h5 class="title"><?= SanitizeHTML::outputCleanHTML($reaction->title) ?></h5>
-                            <p><?= SanitizeHTML::outputCleanHTML($reaction->content) ?></p>
+                            <h5 class="title">
+                                <?= SanitizeHTML::outputCleanHTML($reaction->title) ?>
+                            </h5>
+                            
+                            <p>
+                                <?= SanitizeHTML::outputCleanHTML($reaction->content) ?>
+                            </p>
+                            
                             <span class="small-text">
-                                Geplaats op <?= date('d-m-y', strtotime($reaction->created_at)) ?> door
-                                <?= SanitizeHTML::outputCleanHTML($reaction->user->email) ?>
+                                Geplaats op <?= date('d-m-y', strtotime($reaction->created_at)) ?> 
+                                door<?= SanitizeHTML::outputCleanHTML($reaction->user->email) ?>
                             </span>
 
                             <?php if ($currentUser && $reaction->user->id === $currentUser->id): ?>
-            <!--                    <a href="#">Bewerken</a>-->
-                                <a href="./Backend/DeleteReaction.php?postId=<?=$post->id?>&id=<?=$reaction->id?>">Verwijderen</a>
+                                <div class="btn-wrap">
+                                    <a id="edit-trigger" href="#" class="btn-edit">
+                                        Bewerken
+                                    </a>
 
-                                <form action="./Backend/EditReaction.php" method="post">
-                                    <input type="text" name="title" placeholder="Reactie titel" value="<?= SanitizeHTML::outputCleanHTML($reaction->title) ?>">
-                                    <input type="text" name="content" placeholder="Reactie content" value="<?= SanitizeHTML::outputCleanHTML($reaction->content) ?>">
+                                    <a href="./Backend/DeleteReaction.php?postId=<?=$post->id?>&id=<?=$reaction->id?>" class="btn-delete">
+                                        Verwijderen
+                                    </a>
+                                </div>
+
+                                <form action="./Backend/EditReaction.php" method="post" class="edit-reaction-form hide">
                                     <input type="hidden" name="postId" value="<?=$post->id?>">
                                     <input type="hidden" name="id" value="<?=$reaction->id?>">
-                                    <button type="submit">Bewerken</button>
+                                    
+                                    <input
+                                        type="text"
+                                        name="title"
+                                        placeholder="Reactie titel"
+                                        value="<?= SanitizeHTML::outputCleanHTML($reaction->title) ?>"
+                                        class="input-field"
+                                        required
+                                    >
+                                    
+                                    <input 
+                                        type="text"
+                                        name="content"
+                                        placeholder="Reactie content"
+                                        value="<?= SanitizeHTML::outputCleanHTML($reaction->content) ?>"
+                                        class="input-field"
+                                        required
+                                    >
+                                    
+                                    <button type="submit" class="btn-primary">
+                                        Bewerken
+                                    </button>
                                 </form>
                             <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
-
-            <?php if ($currentUser && !$userHasResponed): ?>
-                <form action="./Backend/NewReaction.php" method="post">
-                    <input type="text" name="title" placeholder="Reactie titel">
-                    <input type="text" name="content" placeholder="Reactie content">
-                    <input type="hidden" name="postId" value="<?=$post->id?>">
-                    <button type="submit">Plaatsen</button>
-                </form>
-            <?php endif; ?>
         </div>
     </section>
+
+    <?php if ($currentUser && !$userHasResponed): ?>
+        <div class="modal hide">
+            <div class="modal-content">
+                <form action="./Backend/NewReaction.php" method="post">
+                    <span class="close">sluiten</span>
+                    <h3 class="title">Reactie plaatsen</h3>
+
+                    <input type="hidden" name="postId" value="<?=$post->id?>">
+
+                    <input 
+                        type="text" 
+                        name="title" 
+                        placeholder="Reactie titel"
+                        class="input-field"
+                        required
+                    >
+                    
+                    <input 
+                        type="text" 
+                        name="content" 
+                        placeholder="Reactie content"
+                        class="input-field"
+                        required    
+                    >
+                    
+                    <button type="submit" class="btn-primary">Plaatsen</button>
+                </form>
+            </div>
+        </div>
+    <?php endif; ?>
 <?php require_once __DIR__ . "/Templates/Footer.php" ?>
