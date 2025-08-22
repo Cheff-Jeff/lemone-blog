@@ -1,0 +1,45 @@
+.new-post-page {
+  min-height: 90dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .container {
+    margin-top: -7%;
+  }
+
+  form {
+    .title-field {
+      width: 100%;
+      border-radius: 5px;
+    }
+
+    .ql-toolbar,
+    .ql-container {
+      border: solid 2px var(--primary-color);
+    }
+
+    .ql-toolbar {
+      margin-top: 20px;
+      margin-bottom: 0px;
+      border-radius: 5px 5px 0px 0px;
+    }
+
+    .ql-container {
+      min-height: 200px;
+      border-top: 0px;
+      border-radius: 0px 0px 15px 15px;
+      font-size: 15px;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .inputError {
+      color: var(--error);
+      margin: 3px auto 0;
+    }
+
+    .btn-primary {
+      margin-top: 20px;
+    }
+  }
+}

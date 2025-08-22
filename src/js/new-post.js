@@ -1,5 +1,11 @@
 const form = document.querySelector("form");
 const contentInput = document.querySelector("#content");
+const titleError = document.querySelector(".inputError.title");
+const titleInput = document.querySelector(".title-field");
+const contentError = document.querySelector(".inputError.content");
+
+let contentValid = false;
+let titleValid = false;
 
 const quill = new Quill("#editor", {
   theme: "snow",
@@ -10,22 +16,44 @@ const quill = new Quill("#editor", {
       ["bold", "italic", "underline", "strike", "link"],
       ["blockquote"],
       [{ list: "ordered" }, { list: "bullet" }],
-
-      [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-
-      ["clean"], // remove formatting button
+      [{ color: [] }, { background: [] }],
+      ["clean"],
     ],
   },
 });
 
-// quill.clipboard.dangerouslyPasteHTML(
-//   '<h3>Dit&nbsp;is&nbsp;mijn&nbsp;nieuwe&nbsp;post</h3><p><strong>Dit&nbsp;is&nbsp;vet&nbsp;met&nbsp;<a href="#" rel="noopener noreferrer" target="_blank">link</a></strong></p><p></p><p></p><p>&lt;script&gt;</p><p>alert(&quot;Hello!&nbsp;I&nbsp;am&nbsp;an&nbsp;alert&nbsp;box!&quot;);</p><p>&lt;/script&gt;</p>'
-// );
+quill.on("text-change", (delta, oldDelta, source) => {
+  contentInput.value = quill.getSemanticHTML();
+});
+
+const checkTitle = (title) => {
+  titleValid = title.length > 10;
+
+  titleValid
+    ? (titleError.innerHTML = "")
+    : (titleError.innerHTML = "titel is verplicht");
+};
+
+const checkContent = (content) => {
+  contentValid = content.length > 10;
+
+  contentValid
+    ? (contentError.innerHTML = "")
+    : (contentError.innerHTML = "content is verplicht");
+};
+
+titleInput.addEventListener("focusout", (e) => {
+  checkTitle(e.target.value);
+});
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-
   contentInput.value = quill.getSemanticHTML();
-  // console.log(quill.getSemanticHTML());
-  form.submit();
+
+  checkTitle(titleInput.value);
+  checkContent(contentInput.value);
+
+  if (titleValid && contentValid) {
+    form.submit();
+  }
 });

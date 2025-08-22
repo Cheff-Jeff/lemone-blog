@@ -18,18 +18,29 @@ $js = 'new-post';
 <?php require_once __DIR__ . "/Templates/Header.php" ?>
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 
-<section class="main-page">
+<section class="main-page new-post-page">
     <div class="container">
         <h1>Nieuwe post</h1>
 
         <form action="./Backend/NewPost.php" method="post">
-            <input type="text" name="title" placeholder="post titel">
             <input type="hidden" name="content" id="content">
-            <!-- <textarea name="content" placeholder="post content"></textarea> -->
+            
+            <input 
+                type="text"
+                name="title"
+                placeholder="post titel"
+                class="input-field title-field"
+                required
+            >
+            <span class="inputError title small-text"></span>
+
             <div id="editor">
             </div>
-
-            <button type="submit">post plaatsten</button>
+            <span class="inputError content small-text"></span>
+            
+            <button type="submit" class="btn-primary">
+                post plaatsten
+            </button>
         </form>
     </div>
 </section>
