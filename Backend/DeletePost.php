@@ -7,7 +7,7 @@ use PHP\Helpers\SessionController;
 
 if (!isset($_GET['id']))
 {
-    header('Location: ../account.php?error=1');
+    header('Location: ../account.php?error=' . urlencode("Er is iets misgegaan."));
 }
 
 try {
@@ -24,7 +24,7 @@ try {
         throw new Exception("Post is niet verwijderd");
     }
 
-    header('Location: ../account.php');
-}catch (\Throwable $th) {
-    header('Location: ../account.php?error=1');
+    header('Location: ../account.php?success=' . urlencode("Post is verwijderd."));
+}catch (\Exception $exception) {
+    header('Location: ../account.php?error='. urlencode($exception->getMessage()));
 }

@@ -6,7 +6,7 @@ use PHP\Helpers\AuthController;
 
 
 if (empty($_POST['email']) || empty($_POST['password'])) {
-    header('Location: ../login.php?error=1');
+    header('Location: ../login.php?error='.urlencode("Vul alle velden in."));
 }
 
 
@@ -25,7 +25,7 @@ try {
         throw new Exception("Account aanmaken mislukt.");
     }
 
-    header('Location: ../index.php');
+    header('Location: ../index.php'.'?success='.urlencode("Account is aangemaakt."));
 }catch (\Exception $exception){
-    header('Location: ../register.php?error=1');
+    header('Location: ../register.php?error='.urlencode($exception->getMessage()));
 }

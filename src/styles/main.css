@@ -1,0 +1,113 @@
+body * {
+  display: block;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  color: var(--primary-color);
+  background: var(--background-color);
+  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  margin: 0 auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.main-page {
+  margin-top: 75px;
+}
+
+.container {
+  width: clamp(500px, 70%, 1200px);
+  margin: 0 auto;
+}
+
+.heading-big {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  margin-top: 15px;
+}
+
+.small-text {
+  font-size: 0.7rem;
+  font-style: italic;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: var(--background-color);
+  border: none;
+  padding: 10px 15px;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background: var(--secondary-color);
+  }
+}
+
+.error-note {
+  position: absolute;
+  top: 30px;
+  right: 5px;
+  background: var(--error-transp);
+  border-left: solid 5px var(--error);
+  color: var(--error);
+  border-radius: 5px;
+  padding: 10px 20px;
+  width: 200px;
+  transition: all 0.5s ease-in-out;
+  overflow: hidden;
+
+  &.hide {
+    width: 0px;
+    padding: 0;
+    border: 0px;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+  }
+}
+
+.good-note {
+  position: absolute;
+  top: 30px;
+  right: 5px;
+  background: var(--correct-transp);
+  border-left: solid 5px var(--correct);
+  color: var(--correct);
+  border-radius: 5px;
+  padding: 10px 20px;
+  width: 200px;
+  transition: all 0.5s ease-in-out;
+  overflow: hidden;
+
+  &.hide {
+    width: 0px;
+    padding: 0;
+    border: 0px;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+  }
+}
+
+.input-field {
+  width: clamp(300px, 35%, 900px);
+  margin: 15px auto 0;
+  padding: 5px 10px;
+  font-size: 1.05rem;
+  border: solid 2px var(--primary-color);
+  border-radius: 15px;
+}
