@@ -25,7 +25,7 @@ $css = 'home';
                         <a href="./post.php?postID=<?=$blogPost->id?>" class="post-card">
                             <article>
                                 <h4 class="title"><?=SanitizeHTML::outputCleanHTML($blogPost->title)?></h4>
-                                <p><?=SanitizeHTML::outputCleanHTML($blogPost->content)?></p>
+                                <p><?=$blogPost->content?></p>
 
                                 <footer>
                                     <span class="small-text">

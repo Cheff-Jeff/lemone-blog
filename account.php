@@ -17,23 +17,31 @@ $user = $userController->getUserByToken();
 
 /** @var Post[] $userPosts */
 $userPosts = $userController->getUserPosts();
+$css = 'account';
 ?>
 
 <?php require_once __DIR__ . "/Templates/Header.php" ?>
-<div class="container">
-    <h1>Hallo <?=SanitizeHTML::outputCleanHTML($user->email)?></h1>
+<section class="main-page">
+    <div class="container">
+        <h1 class="account-page-title">
+            Hallo <?=SanitizeHTML::outputCleanHTML($user->email)?>
+        </h1>
 
-    <?php foreach ($userPosts as $post) : ?>
-        <div class="post">
-            <h5><?= $post->title ?></h5>
+        <h3 class="subtitle">Jouw posts: </h3>
+        
+        <div class="post-cards">
+            <?php foreach ($userPosts as $post) : ?>
+                <div class="post">
+                    <h5><?= $post->title ?></h5>
 
-            <div class="buttons">
-                <a href="./edit-post.php?postID=<?=SanitizeHTML::outputCleanHTML(strval($post->id))?>">bewerken</a>
+                    <div class="buttons">
+                        <a class="edit" href="./edit-post.php?postID=<?=SanitizeHTML::outputCleanHTML(strval($post->id))?>">bewerken</a>
 
-                <a href="./Backend/DeletePost.php?id=<?=SanitizeHTML::outputCleanHTML(strval($post->id))?>">verwijderen</a>
-            </div>
+                        <a class="delete" href="./Backend/DeletePost.php?id=<?=SanitizeHTML::outputCleanHTML(strval($post->id))?>">verwijderen</a>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
-
-    <?php endforeach; ?>
-</div>
+    </div>
+</section>
 <?php require_once __DIR__ . "/Templates/Footer.php" ?>

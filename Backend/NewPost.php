@@ -17,11 +17,7 @@ try {
     if (!is_string($_POST['content'])) throw new Exception("Content is geen text");
 
     $title = strip_tags($_POST['title']);
-    $content = htmlentities(
-        SanitizeHTML::cleanWYSIWYGInput($_POST['content']),
-        ENT_QUOTES | ENT_HTML5,
-        'UTF-8'
-    );
+    $content = SanitizeHTML::cleanWYSIWYGInput($_POST['content']);
     
     $postController = new PostController();
     $newPost = $postController->createPost($title, $content);

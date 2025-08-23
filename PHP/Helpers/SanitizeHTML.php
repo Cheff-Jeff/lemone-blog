@@ -31,7 +31,8 @@ class SanitizeHTML
         $config->set('URI.SafeIframeRegexp', '');
 
         $purifier = new HTMLPurifier($config);
+        $clean = $purifier->purify($html);
 
-        return $purifier->purify(html_entity_decode($html, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+        return preg_replace('/\x{00A0}/u', ' ', $clean);
     }
 }

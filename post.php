@@ -57,11 +57,7 @@ foreach ($reactions as $reaction) {
                     </h1>
 
                     <div class="content">
-                        <?= html_entity_decode(
-                            $post->content,
-                            ENT_QUOTES | ENT_HTML5,
-                            'UTF-8'); 
-                        ?>
+                        <?= $post->content ?>
                     </div>
                 </div>
             </article>
