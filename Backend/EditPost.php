@@ -8,7 +8,7 @@ use PHP\Helpers\SessionController;
 
 if (empty($_POST['title']) || empty($_POST['content']) || empty($_POST['id']))
 {
-    header('Location: ../edit-post.php?error='. urlencode("Er is iets misgegaan.") .'&postID='.$_POST['postID']);
+    header('Location: ../edit-post.php?error='. urlencode("Er is iets misgegaan.") .'&postID='.$_POST['id']);
 }
 
 try {
