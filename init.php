@@ -70,9 +70,6 @@ $stmt->bindParam(':user_id', $post1['user_id']);
 $stmt->execute();
 $post1['id'] = $pdo->lastInsertId();
 
-$stmt->execute();
-$stmt->execute();
-
 $stmt = $pdo->prepare("INSERT INTO posts (title, content, created_at, user_id) VALUES(:title, :content, :date, :user_id)");
 $stmt->bindParam(':title', $post2['title']);
 $stmt->bindParam(':content', $post2['content']);
@@ -81,9 +78,6 @@ $stmt->bindParam(':user_id', $post2['user_id']);
 $stmt->execute();
 $post2['id'] = $pdo->lastInsertId();
 
-$stmt->execute();
-$stmt->execute();
-
 $stmt = $pdo->prepare("INSERT INTO posts (title, content, created_at, user_id) VALUES(:title, :content, :date, :user_id)");
 $stmt->bindParam(':title', $post3['title']);
 $stmt->bindParam(':content', $post3['content']);
@@ -91,9 +85,6 @@ $stmt->bindParam(':date', $post3['created_at']);
 $stmt->bindParam(':user_id', $post3['user_id']);
 $stmt->execute();
 $post3['id'] = $pdo->lastInsertId();
-
-$stmt->execute();
-$stmt->execute();
 
 $response1 = [
     'title' => "Guinness Serie ?",
@@ -120,7 +111,6 @@ $stmt->bindParam(':content', $response1['content']);
 $stmt->bindParam(':user_id', $response1['user_id']);
 $stmt->bindParam(':post_id', $response1['post_id']);
 $stmt->execute();
-$stmt->execute();
 
 $stmt = $pdo->prepare("INSERT INTO reactions (title, content, created_at, user_id, post_id) VALUES (:title, :content, '25-08-21', :user_id, :post_id)");
 $stmt->bindParam(':title', $response2['title']);
@@ -128,14 +118,12 @@ $stmt->bindParam(':content', $response2['content']);
 $stmt->bindParam(':user_id', $response2['user_id']);
 $stmt->bindParam(':post_id', $response2['post_id']);
 $stmt->execute();
-$stmt->execute();
 
 $stmt = $pdo->prepare("INSERT INTO reactions (title, content, created_at, user_id, post_id) VALUES (:title, :content, '25-08-21', :user_id, :post_id)");
 $stmt->bindParam(':title', $response3['title']);
 $stmt->bindParam(':content', $response3['content']);
 $stmt->bindParam(':user_id', $response3['user_id']);
 $stmt->bindParam(':post_id', $response3['post_id']);
-$stmt->execute();
 $stmt->execute();
 
 var_dump("Database initialized");
